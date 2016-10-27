@@ -1,10 +1,5 @@
-# ===========================================================================
-
 import pangloss
 import os,cPickle
-from astropy.table import Table
-
-# ======================================================================
 
 """
     NAME
@@ -38,8 +33,6 @@ from astropy.table import Table
       2013-03-23  Marshall & Collett (Oxford)
 """
 
-#=========================================================================
-
 def writePickle(contents,filename):
     F = open(filename,"wb")
     cPickle.dump(contents,F,protocol=2)
@@ -51,8 +44,6 @@ def readPickle(filename):
     contents = cPickle.load(F)
     F.close()
     return contents
-
-# ----------------------------------------------------------------------------
 
 def read_hilbert_catalog(filename,config):
 
@@ -86,7 +77,6 @@ def read_hilbert_catalog(filename,config):
 
     return table
 
-# ----------------------------------------------------------------------------
 # Remove file, if it exists, stay quiet otherwise:
 
 def rm(filename):
@@ -96,12 +86,8 @@ def rm(filename):
         pass
     return
 
-# ----------------------------------------------------------------------------
 def int_or_float(s):
     try:
         return int(s)
     except ValueError:
         return float(s)
-
-
-# ======================================================================
