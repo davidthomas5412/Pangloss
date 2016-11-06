@@ -563,7 +563,7 @@ class BackgroundCatalog(pangloss.Catalog):
         # If a foreground catalog object is not passed, load in the appropriate catalog.
         if foreground is None:
             # Load in the corresponding foreground catalog
-            config = pangloss.Configuration(pangloss.CATALOG_EXAMPLE)
+            config = pangloss.Configuration.example()
             foreground = pangloss.ForegroundCatalog(pangloss.GUO_FILE, config)
 
         # Only take the columns from foreground that are needed for a lightcone
@@ -794,7 +794,7 @@ class BackgroundCatalog(pangloss.Catalog):
         elif corr_type == 'ng':
             # Load in foreground catalog if none is passed
             if foreground is None:
-                config = pangloss.Configuration(pangloss.PANGLOSS_MODULE_DIR + '/example/example.config')
+                config = pangloss.Configuration.example()
                 foreground = pangloss.ForegroundCatalog(pangloss.PANGLOSS_MODULE_DIR + '/data/GGL_los_8_' + str(self.map_x) + '_' + str(self.map_y) + '_' + str(self.field_i) + '_' + str(self.field_j) + '_N_4096_ang_4_Guo_galaxies_on_plane_27_to_63.images.txt', config)
 
             # Create catalog of the foreground galaxy locations

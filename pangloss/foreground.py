@@ -57,8 +57,8 @@ class ForegroundCatalog(pangloss.Catalog):
         self.config = config
         self.read(filename, config)
 
-        # Add columns to contain free parameters - initialize to zero:
-        self.galaxies['Mh'] = self.galaxies['Mhalo_obs'].copy() * 0.0
+        # Add columns to contain free parameters - initialize to true massses:
+        self.galaxies['Mh'] = self.galaxies['Mhalo_obs'].copy() * 1.0
 
         # Parsing the file name
         # 0 <= x,y <= 7, each (i,j) map covers 4x4 square degrees

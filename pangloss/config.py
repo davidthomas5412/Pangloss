@@ -1,5 +1,8 @@
 import os, glob
-from .data import CONFIG_FILE
+from .data import PANGLOSS_MODULE_DIR
+
+EXAMPLE_CONFIG = os.path.join(os.path.join(os.path.dirname(PANGLOSS_MODULE_DIR), 'example'),
+                        'example.config')
 
 class Configuration(object):
     """
@@ -157,4 +160,4 @@ class Configuration(object):
 
     @staticmethod
     def example():
-        return Configuration(CONFIG_FILE)
+        return Configuration(EXAMPLE_CONFIG)
