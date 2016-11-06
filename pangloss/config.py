@@ -1,5 +1,5 @@
 import os, glob
-from .data import pangloss_module_dir
+from .data import CONFIG_FILE
 
 class Configuration(object):
     """
@@ -157,6 +157,4 @@ class Configuration(object):
 
     @staticmethod
     def example():
-        example_config = os.path.join(os.path.dirname(pangloss_module_dir),
-                                      'example/example.config')
-        return Configuration(example_config)
+        return Configuration(CONFIG_FILE)
