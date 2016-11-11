@@ -68,7 +68,7 @@ class Lightcone(object):
 
         self.name = 'Lightcone through the Universe'
         self.flavor = flavor   # 'real' or 'simulated'
-        self.catalog = catalog # astropy table of galaxies
+        self.catalog = catalog # table of galaxies
         self.ID = ID           # ID number from the cone's center background galaxy
 
         # Simulated lightcones have "true" (ray-traced) convergence:

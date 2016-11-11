@@ -296,7 +296,8 @@ class BackgroundCatalog(pangloss.Catalog):
 
         return
 
-    def lens_by_halos(self,save=False,methods=['add'],use_method='add',relevance_lim=0.0,lookup_table=False,smooth_corr=False,foreground_corr=False):
+    def lens_by_halos(self, save=False, methods=['add'], use_method='add', relevance_lim=10e-6,
+                      lookup_table=False, smooth_corr=False, foreground_corr=False):
         '''
         Lens background galaxies by the combined shear and convergence in their respective lightcones using
         the method given by `use_method`. By default all foreground objects in a lightcone are used in the

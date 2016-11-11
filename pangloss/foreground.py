@@ -48,14 +48,17 @@ class ForegroundCatalog(pangloss.Catalog):
       2015-07-2  Started Everett (SLAC)
     """
 
-    def __init__(self,filename,config):
+    def __init__(self, filename, config, stellar_mass_threshold=None):
 
         self.filename = filename
         self.type = 'foreground'
 
         # Structures catalog metadata from configfile and reads in the catalog data
         self.config = config
-        self.read(filename, config)
+        self.galaxies = pangloss.read_hilbert_catalog(filename, config)
+
+        if stellar_mass_threshold:
+            self.galaxies = self.galaxies[self.galaxies['Mstar_obs'] > stellar_mass_threshold]
 
         # Add columns to contain free parameters - initialize to true massses:
         self.galaxies['Mh'] = self.galaxies['Mhalo_obs'].copy() * 1.0
@@ -83,16 +86,6 @@ class ForegroundCatalog(pangloss.Catalog):
     def __str(self):
         # Add more!
         return 'Foreground catalog with {} galaxies, with redshifts ranging from {} to {}'.format(self.galaxyCount,self.minZ,self.maxZ)
-
-    def read(self,filename,config):
-        '''
-        Uses astropy.table to read catalog, but with a few specific changes only for
-        Hilbert foreground catalogs.
-        '''
-
-        self.galaxies = pangloss.read_hilbert_catalog(filename, config)
-
-        return
 
     def snap_to_grid(self,catalog, Grid):
         '''
