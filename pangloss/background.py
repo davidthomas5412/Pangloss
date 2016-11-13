@@ -262,7 +262,7 @@ class BackgroundCatalog(pangloss.Catalog):
         g_conj = np.array([val.conjugate() for val in g])
 
         # Flag any galaxy that has been strongly (or near-strongly) lensed
-        self.galaxies['strong_flag'][np.abs(g)>0.5] = 1
+        self.galaxies['strong_flag'] = np.abs(g)>0.5
 
         # Calculate the observed ellipticity for weak lensing events
         index = np.abs(g) < 1.0
@@ -910,6 +910,32 @@ class BackgroundCatalog(pangloss.Catalog):
         return chi2, n_sigma, mean_err, std_err
 
 # ----------------------------------------------------------------------------
+
+    def halo_mass_log_likelihood(self):
+        """
+            Compare observed ellipticity to ray traced reduced shear.
+        """
+        std_int = self.std_int
+        std_e1 = self.galaxies['e1'].std()
+        std_e2 = self.galaxies['e2'].std()
+        std_obs = np.mean([std_e1, std_e2])
+        sigma = np.sqrt(std_int**2+std_obs**2)
+
+        # Calculate the (log of) normalization constant
+        N = 2.*self.galaxy_count
+        logZ = (N/2.)*np.log(2.*np.pi*sigma**2)
+
+        # Calculate chi2
+        g = self.galaxies['g_halo']
+        g1, g2 = g.real, g.imag
+        e1, e2 = self.galaxies['e1'], self.galaxies['e2']
+
+        chi2 = np.sum((e1-g1)**2/sigma**2) + np.sum((e2-g2)**2/sigma**2)
+
+        # Calculate log-likelihood
+        log_likelihood = -logZ + (-0.5) * chi2
+
+        return log_likelihood
 
     def calculate_log_likelihood(self,lensed='halo'):
         '''
