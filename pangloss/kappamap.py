@@ -81,3 +81,7 @@ class Kappamap(pangloss.WLMap):
         ax.imshow(self.values[0],cmap='gray_r',vmin=Kmin,vmax=Kmax,origin='lower')
 
         return
+
+    @staticmethod
+    def example():
+        return Kappamap(pangloss.KAPPA_FILE, FITS=False)

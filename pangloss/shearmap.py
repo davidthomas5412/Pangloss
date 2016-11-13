@@ -146,3 +146,7 @@ class Shearmap(pangloss.WLMap):
         ax.add_artist(bar)
 
         return
+
+    @staticmethod
+    def example():
+        return Shearmap([pangloss.GAMMA_1_FILE, pangloss.GAMMA_2_FILE], FITS=False)
