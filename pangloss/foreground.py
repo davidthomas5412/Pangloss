@@ -249,3 +249,7 @@ class ForegroundCatalog(pangloss.Catalog):
 
     def draw_halo_masses(self):
         self.galaxies['Mh'] = self.mass_prior.draw(self.galaxies)
+
+    @staticmethod
+    def guo():
+        return ForegroundCatalog(pangloss.GUO_FILE, pangloss.Configuration.example(), stellar_mass_threshold=58839200000.0)
