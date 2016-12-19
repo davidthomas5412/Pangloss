@@ -104,7 +104,7 @@ class Lightcone(object):
         self.galaxies['y'] = y
         self.galaxies['r'] = r
         self.galaxies['phi'] = phi
-        self.galaxies = self.galaxies[self.galaxies['r'] < self.rmax]
+        self.galaxies = pd.DataFrame.copy(self.galaxies[self.galaxies['r'] < self.rmax])
 
         try:
             self.galaxies = self.galaxies[self.galaxies['Type'] != 2]
@@ -203,7 +203,7 @@ class Lightcone(object):
         self.zl = zl
         self.zs = zs
         self.cosmo = cosmo
-        self.galaxies = self.galaxies[self.galaxies['z_obs'] < zs+0.2]
+        self.galaxies = pd.DataFrame.copy(self.galaxies[self.galaxies['z_obs'] < zs])
         self.galaxy_count = len(self.galaxies)
         return
 
@@ -385,26 +385,26 @@ class Lightcone(object):
         if profile=="BMO1":
             if lensing_table is None:
                 # Compute the BMO truncated profile for each object
-                F = pangloss.BMO1Ffunc(self.galaxies['X'],xtrunc)
-                G = pangloss.BMO1Gfunc(self.galaxies['X'],xtrunc)
+                F = pangloss.BMO1Ffunc(self.galaxies['X'].as_matrix(),xtrunc.as_matrix())
+                G = pangloss.BMO1Gfunc(self.galaxies['X'].as_matrix(),xtrunc.as_matrix())
                 #F = pangloss.BMO1FSpencerFunc(self.galaxies['X'],xtrunc)
                 #G = pangloss.BMO1GSpencerFunc(self.galaxies['X'],xtrunc)
             else:
                 # Use an interpolated lookup table for the profile for each object
-                F = lensing_table.lookup_BMO1F(self.galaxies['X'],xtrunc)
-                G = lensing_table.lookup_BMO1G(self.galaxies['X'],xtrunc)
+                F = lensing_table.lookup_BMO1F(self.galaxies['X'].as_matrix(),xtrunc.as_matrix())
+                G = lensing_table.lookup_BMO1G(self.galaxies['X'].as_matrix(),xtrunc.as_matrix())
 
         if profile=="BMO2":
             if lensing_table is None:
                 # Compute the BMO truncated profile for each object
-                F=pangloss.BMO2Ffunc(self.galaxies['X'],xtrunc)
-                G=pangloss.BMO2Gfunc(self.galaxies['X'],xtrunc)
+                F=pangloss.BMO2Ffunc(self.galaxies['X'].as_matrix(),xtrunc.as_matrix())
+                G=pangloss.BMO2Gfunc(self.galaxies['X'].as_matrix(),xtrunc.as_matrix())
                 #F = pangloss.BMO2FSpencerFunc(self.galaxies['X'],xtrunc)
                 #G = pangloss.BMO2GSpencerFunc(self.galaxies['X'],xtrunc)
             else:
                 # Use an interpolated lookup table for the profile for each object
-                F = lensing_table.lookup_BMO2F(self.galaxies['X'],xtrunc)
-                G = lensing_table.lookup_BMO2G(self.galaxies['X'],xtrunc)
+                F = lensing_table.lookup_BMO2F(self.galaxies['X'].as_matrix(),xtrunc.as_matrix())
+                G = lensing_table.lookup_BMO2G(self.galaxies['X'].as_matrix(),xtrunc.as_matrix())
 
         kappa = 1.0*self.kappa_s*F
         gamma = 1.0*self.kappa_s*(G-F)

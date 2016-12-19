@@ -916,8 +916,10 @@ class BackgroundCatalog(pangloss.Catalog):
             Compare observed ellipticity to ray traced reduced shear.
         """
         std_int = self.std_int
-        std_e1 = self.galaxies['e1'].std()
-        std_e2 = self.galaxies['e2'].std()
+        e1 = self.galaxies['e1'].as_matrix()
+        e2 = self.galaxies['e2'].as_matrix()
+        std_e1 = e1.std()
+        std_e2 = e2.std()
         std_obs = np.mean([std_e1, std_e2])
         sigma = np.sqrt(std_int**2+std_obs**2)
 
@@ -926,10 +928,8 @@ class BackgroundCatalog(pangloss.Catalog):
         logZ = (N/2.)*np.log(2.*np.pi*sigma**2)
 
         # Calculate chi2
-        g = self.galaxies['g_halo']
+        g = self.galaxies['g_halo'].as_matrix()
         g1, g2 = g.real, g.imag
-        e1, e2 = self.galaxies['e1'], self.galaxies['e2']
-
         chi2 = np.sum((e1-g1)**2/sigma**2) + np.sum((e2-g2)**2/sigma**2)
 
         # Calculate log-likelihood

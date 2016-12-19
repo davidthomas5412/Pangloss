@@ -252,4 +252,5 @@ class ForegroundCatalog(pangloss.Catalog):
 
     @staticmethod
     def guo():
-        return ForegroundCatalog(pangloss.GUO_FILE, pangloss.Configuration.example(), stellar_mass_threshold=58839200000.0)
+        return ForegroundCatalog(pangloss.GUO_FILE, pangloss.Configuration.example())
+        #stellar_mass_threshold=58839200000.0)
