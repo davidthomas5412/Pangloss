@@ -73,6 +73,7 @@ def read_hilbert_catalog(filename,config):
         raise NameError("Error in io.readCatalog: no mag column called %s\n" % config.parameters['MagName'])
 
     table['GalID'] = table['GalID'].astype(str)
+    table = pd.DataFrame.copy(table[table['Mhalo_obs'] > 0])
     return table
 
 # Remove file, if it exists, stay quiet otherwise:
